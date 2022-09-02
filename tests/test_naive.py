@@ -1,53 +1,4 @@
-import itertools
-from collections import defaultdict
-from dataclasses import dataclass
-from functools import cached_property
-from typing import Dict, Iterable, Set, Tuple
-
-
-@dataclass
-class Substring:
-    starting_index: int
-    substring: str
-
-
-class Naive:
-    def __init__(self, string_1: str, string_2: str, substring_length: int):
-        self._string_1 = string_1
-        self._string_2 = string_2
-        self._substring_length = substring_length
-        self._hash = defaultdict(set)
-
-    def find_substrings(self) -> Set[Tuple[int, int]]:
-        starting_index_pairs = set()
-        for substring, first_string_starting_indices in self._hash_of_first_string_substrings.items():
-            second_string_starting_indices = self._hash_of_second_string_substrings.get(substring, None)
-            if second_string_starting_indices:
-                substring_index_pairs = itertools.product(first_string_starting_indices, second_string_starting_indices)
-                starting_index_pairs.update(set(substring_index_pairs))
-        return starting_index_pairs
-
-    @cached_property
-    def _hash_of_first_string_substrings(self) -> Dict[str, Set[int]]:
-        return self._hash_substrings(full_string=self._string_1)
-
-    @cached_property
-    def _hash_of_second_string_substrings(self) -> Dict[str, Set[int]]:
-        return self._hash_substrings(full_string=self._string_2)
-
-    def _hash_substrings(self, full_string: str) -> Dict[str, Set[int]]:
-        substring_hash = defaultdict(set)
-        for first_string_substring in self._get_all_substrings(full_string=full_string):
-            substring_hash[first_string_substring.substring].add(first_string_substring.starting_index)
-        return substring_hash
-
-    def _get_all_substrings(self, full_string: str) -> Iterable[Substring]:
-        for start_index in range(len(full_string[:-self._substring_length]) + 1):
-            substring = full_string[start_index:start_index + self._substring_length]
-            yield Substring(
-                starting_index=start_index,
-                substring=substring,
-            )
+from python.naive import Naive
 
 
 class TestNaive:
@@ -69,3 +20,38 @@ class TestNaive:
         substrings = Naive(string_1=string_1, string_2=string_2,
                            substring_length=len(string_1)).find_substrings()
         assert substrings == {(0, 0)}
+
+    def test_substring_length_is_longer_than_first_word(self):
+        string_1 = 'arbitrar'
+        string_2 = 'arbitrary'
+        substrings = Naive(string_1=string_1, string_2=string_2,
+                           substring_length=len(string_2)).find_substrings()
+        assert substrings == set()
+
+    def test_substring_length_is_longer_than_second_word(self):
+        string_1 = 'arbitrary'
+        string_2 = 'arbitrar'
+        substrings = Naive(string_1=string_1, string_2=string_2,
+                           substring_length=len(string_1)).find_substrings()
+        assert substrings == set()
+
+    def test_no_substring_in_common(self):
+        string_1 = 'abcd'
+        string_2 = 'efgh'
+        substrings = Naive(string_1=string_1, string_2=string_2,
+                           substring_length=len(string_1)).find_substrings()
+        assert substrings == set()
+
+    def test_multiple_substrings_in_second_word(self):
+        string_1 = 'abcd'
+        string_2 = 'abcdefabcdef'
+        substrings = Naive(string_1=string_1, string_2=string_2,
+                           substring_length=2).find_substrings()
+        assert substrings == {
+            (0, 0),
+            (0, 6),
+            (1, 1),
+            (1, 7),
+            (2, 2),
+            (2, 8),
+        }
