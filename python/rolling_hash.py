@@ -24,11 +24,10 @@ class RollingHash:
     def _hash_with_previous(self):
         unwanted_character = self._previous_hash.string[0]
         previous_first_character_binary_value = self._get_character_binary_value(character=unwanted_character)
-        previous_first_character_encoded_value = previous_first_character_binary_value * self._salt ** (len(self._previous_hash.string) - 1)
+        previous_first_character_encoded_value = previous_first_character_binary_value * self._salt ** (len(self._string) - 1)
         base_value = self._previous_hash.value - previous_first_character_encoded_value
-        return base_value * self._salt + self._get_character_binary_value(character=self._string)
+        return base_value * self._salt + self._get_character_binary_value(character=self._string[-1])
 
     @staticmethod
     def _get_character_binary_value(character: str) -> int:
-        binary_string = format(ord(character), 'b')
-        return int(binary_string, 2)
+        return ord(character)
