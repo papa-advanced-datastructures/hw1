@@ -4,15 +4,10 @@ from functools import cached_property
 from typing import Dict, Iterable, Set, Tuple
 
 from python.definitions import Substring
+from python.substring_finder import SubstringFinder
 
 
-class Naive:
-    def __init__(self, string_1: str, string_2: str, substring_length: int):
-        self._string_1 = string_1
-        self._string_2 = string_2
-        self._substring_length = substring_length
-        self._hash = defaultdict(set)
-
+class SubstringFinderNaive(SubstringFinder):
     def find_substrings(self) -> Set[Tuple[int, int]]:
         starting_index_pairs = set()
         for substring, first_string_starting_indices in self._hash_of_first_string_substrings.items():
