@@ -10,5 +10,6 @@ class Substring:
 
 @dataclass
 class PreviousHash:
-    string: str
+    first_character: str
     value: int
+    window_size: int

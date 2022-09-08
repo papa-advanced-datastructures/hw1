@@ -7,15 +7,19 @@ from python.substring_finder import SubstringFinder
 
 class SubstringFinderImproved(SubstringFinder):
     def _get_all_substring_hashes(self, full_string: str) -> Iterable[Substring]:
-        previous_hash = None
-        for start_index in range(len(full_string[:-self._substring_length]) + 1):
-            substring = full_string[start_index:start_index + self._substring_length]
-            previous_hash = RollingHash(string=substring, previous_hash=previous_hash).run()
-            yield Substring(
-                starting_index=start_index,
-                hash_code=previous_hash,
-            )
+        previous_substring = Substring(
+            starting_index=0,
+            hash_code=RollingHash(string_to_add=full_string[:self._substring_length]).run()
+        )
+        yield previous_substring
+        for next_character in full_string[self._substring_length:]:
             previous_hash = PreviousHash(
-                string=substring,
-                value=previous_hash
+                first_character=full_string[previous_substring.starting_index],
+                value=previous_substring.hash_code,
+                window_size=self._substring_length
             )
+            previous_substring = Substring(
+                starting_index=previous_substring.starting_index + 1,
+                hash_code=RollingHash(string_to_add=next_character, previous_hash=previous_hash).run()
+            )
+            yield previous_substring
