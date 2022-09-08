@@ -13,7 +13,7 @@ class TestMain:
                 f.write('arbitrary')
             with open(string_2_filename, 'w') as f:
                 f.write('arbitrary2')
-            substrings = Main([string_1_filename, string_2_filename, '9']).run()
+            substrings = Main([None, string_1_filename, string_2_filename, '9']).run()
             assert substrings == {(0, 0)}
         finally:
             string_1_filename.unlink(missing_ok=True)
