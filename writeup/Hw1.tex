@@ -126,6 +126,9 @@ This uses constant time operations for all portions of this equation, consisting
 
 %%%%%%%%%%%%%%%%
 \section*{Problem 4}
+\subsection*{Explanation}
+My solution first implements the naive version, where all substrings are stored in a hash table, with the key being the substring itself and the value being a list of indices where that substring was found. It begins at the first index of the first word, extracts the substring from that index of the given length, then inserts the substring into the hash along with the start index. It will then move to the next index and repeat until all substrings of the word have been stored in the set. It then repeats this process with the second word in a second hash table. Finally, it goes through each entry in one of the hash tables and determines if there is a matching substring in the second hash table by querying the key. If there is a matching key, it creates a set product of the two words' index lists, creating all possible combinations of start indices for both words that generate the same substring.
 
+The more complex solution actually uses nearly the same algorithm, except it hashes the keys using the process described in problem 3 of this homework instead of using the substring directly. So, instead of extracting each substring at each start index for a word, it first hashes only the first substring. Then, it hashes subsequent keys by giving only the next character and the first character of the hash before it.
 
 \end{document}
