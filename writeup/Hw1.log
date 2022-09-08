@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.8.25)  2 SEP 2022 09:28
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.8.25)  8 SEP 2022 11:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -410,7 +410,7 @@ Package xypdf Info: Line width: 0.47998pt on input line 28.
 Here is how much of TeX's memory you used:
  7683 strings out of 478994
  99514 string characters out of 5858184
- 459029 words of memory out of 5000000
+ 460029 words of memory out of 5000000
  25031 multiletter control sequences out of 15000+600000
  416033 words of font info for 77 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -429,7 +429,7 @@ mib6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr
 b></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 ></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><
 /usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Hw1.pdf (3 pages, 126467 bytes).
+Output written on Hw1.pdf (3 pages, 126785 bytes).
 PDF statistics:
  70 PDF objects out of 1000 (max. 8388607)
  50 compressed objects within 1 object stream

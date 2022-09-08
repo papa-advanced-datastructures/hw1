@@ -91,7 +91,7 @@ This is because 3 times any even number will be exactly divisible by 6, giving a
 %%%%%%%%%%%%%%%%
 \section*{Problem 3}
 
-We can take the binary representation of each character and mod them by some number, say 10. Then we can multiply each character by subsequent powers of ten so that no character can interfere with the next when added together, since the highest value of some power, $p$, $9 * 10^p < 10^{p+1}$. This holds true for any base, say $a$, not only 10. We can use this fact to include a salt, so we can say that 
+We can take the binary representation of each character and mod them by some number, say 10. Then we can multiply each character by subsequent powers of ten so that no character can interfere with the next when added together, since the highest value of some power, $p$, $9 * 10^p < 10^{p+1}$. This holds true for any base, say $a$, not only 10. In order to ensure some value for each character, we can mod by $a - 1$ and add 1 to the result. We can use this fact to include a salt, so we can say that 
 
 \[
   a = b + \texttt{salt}
@@ -100,7 +100,7 @@ We can take the binary representation of each character and mod them by some num
 Where $b$ is some minimum base number we would like to utilize. We can then define a character encoding by
 
 \[
-  x_n = c_n \mod a
+  (x_n = c_n \mod (a - 1)) + 1
 \]
 
 We then have that 
@@ -122,5 +122,10 @@ So, to retrieve $h(t)$ given $s$, $t$, and $h(s)$, we simply subtract $x_1(a^n)$
 \]
 
 This uses constant time operations for all portions of this equation, consisting of modulo, exponentiation, subtraction, multiplication, and addition.
+
+
+%%%%%%%%%%%%%%%%
+\section*{Problem 4}
+
 
 \end{document}
