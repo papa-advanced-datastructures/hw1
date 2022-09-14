@@ -12,7 +12,6 @@ class SubstringFinder(ABC):
         self._string_1 = string_1
         self._string_2 = string_2
         self._substring_length = substring_length
-        self._hash = defaultdict(set)
 
     def find_substrings(self) -> Set[Tuple[int, int]]:
         starting_index_pairs = set()

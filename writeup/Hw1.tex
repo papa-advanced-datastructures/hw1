@@ -131,4 +131,23 @@ My solution first implements the naive version, where all substrings are stored 
 
 The more complex solution actually uses nearly the same algorithm, except it hashes the keys using the process described in problem 3 of this homework instead of using the substring directly. So, instead of extracting each substring at each start index for a word, it first hashes only the first substring. Then, it hashes subsequent keys by giving only the next character and the first character of the hash before it.
 
+In order to ensure it was working properly, I created tests on key and corner case inputs (strings and substring length) with known outputs and ensured that both methods produced correct results. I then ran tests using large, randomly generated strings and ensured that both methods returned the same result.
+
+\subsection*{Benchmarking}
+To benchmark these methods, I compared each method with strings varying from length 1 to 1000. Each comparison was run using five different random substring lengths. I then plotted the average duration of the substring finding algorithm across those five random substrings lengths against the length of the full input strings.
+
+\[
+  \includegraphics[width=0.5\textwidth]{images/durations.png}
+\]
+
+We can see here that the naive solution outperforms the complex version. We can speculate as to why this may be the case. First of all, there is an overflow error in the rolling hash, as the resulting integer is apparently too large. To resolve this, I experimented with different salts and modulo different locations. For example, instead of only modulo-ing the decimal value of a characer, I put a different, large, prime modulo on the result of all math operations. This solved the warning, but did not improve the duration with respect to the naive implementation.
+
+I thought it may be due to some large number of unexpected collisions in the rolling hash function. As I debugged, though, I saw that the has sizes for both were identical during spot checks. However, I tried increasing the salt size, which would increase the modulo and allow for fewer collisions, just in case. This did not have any desirable effect. Here is the plot with a salt of 1000 instead of 100.
+
+\[
+  \includegraphics[width=0.5\textwidth]{images/durations_1000_salt.png}
+\]
+
+I speculate that the rolling hash function itself may take more operations to run than the naive counterpart. Perhaps there is a way to utilize the rolling hash function without storing all substring hashes of both strings when using the rolling hash. This would allow for fewer iteratons through the characters of the strings when using a rolling hash. Normally, we would expect the complexity of the naive function to be $O(n k)$, where $n$ is the length of the input strings and $k$ is the length of the substring. This is because for every character in $n$, we find a substring of length $k$ and insert it into the hash. For the rolling hash function, we would expect $O(n)$, because for ever character $n$, we perform a constant number of arithmetic operations. Since $n$ is the main culprit in the rolling hash function, it could potentially be further reduced by reducing the number of iterations through characters it must perform.
+
 \end{document}
